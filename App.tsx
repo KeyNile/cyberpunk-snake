@@ -1,20 +1,15 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import { HomeScreen } from './src/screens/HomeScreen';
+import { GameScreen } from './src/screens/GameScreen';
 
 export default function App() {
+  const [screen, setScreen] = useState<'home' | 'game'>('home');
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      {screen === 'home'
+        ? <HomeScreen onStart={() => setScreen('game')} />
+        : <GameScreen onHome={() => setScreen('home')} />}
+    </GestureHandlerRootView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
