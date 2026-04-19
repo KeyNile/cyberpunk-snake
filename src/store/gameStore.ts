@@ -59,7 +59,7 @@ export const useGameStore = create<GameState>((set) => ({
   reset: () => set({
     phase: 'idle',
     score: 0,
-    snake: initialSnake,
+    snake: [...initialSnake],
     direction: 'RIGHT',
     nextDirection: 'RIGHT',
     food: randomPoint(),
