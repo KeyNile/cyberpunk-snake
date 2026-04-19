@@ -28,9 +28,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "experiments": {
-      "baseUrl": "/cyberpunk-snake"
-    },
     "extra": {
       "eas": {
         "projectId": "68d33268-2344-4418-b6af-54efb7c1328d"

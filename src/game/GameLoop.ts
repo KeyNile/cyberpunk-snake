@@ -4,6 +4,7 @@ import { moveSnake, growSnake, isOpposite } from './Snake';
 import { hitSelf, hitObstacle, ateFood } from './Collision';
 import { spawnFood, spawnObstacle } from './Map';
 import { TICK_MS_MIN } from '../constants/theme';
+import { SoundManager } from '../sound/SoundManager';
 
 const OBSTACLE_INTERVAL_MS = 30_000;
 const SPEED_THRESHOLD = 100;
@@ -37,6 +38,7 @@ function tick(now: number) {
     const newObs = spawnObstacle(store.obstacles, store.snake);
     store.setObstacles([...store.obstacles, newObs]);
     lastObstacleSpawn = now;
+    SoundManager.obstacleSpawn();
   }
 
   // 틱 간격마다 이동
@@ -52,12 +54,16 @@ function tick(now: number) {
     const { newSnake, wrappedWall } = moveSnake(store.snake, dir);
 
     // 벽 통과 보너스
-    if (wrappedWall) store.addScore(5);
+    if (wrappedWall) {
+      store.addScore(5);
+      SoundManager.wallWarp();
+    }
 
     // 충돌 검사
     if (hitSelf(newSnake) || hitObstacle(newSnake, store.obstacles)) {
       store.setPhase('dead');
       combo = 0;
+      SoundManager.gameOver();
       return;
     }
 
@@ -69,6 +75,12 @@ function tick(now: number) {
       store.addScore(gained);
       store.setSnake(growSnake(newSnake));
       store.setFood(spawnFood(newSnake, store.obstacles));
+
+      if (combo > 1) {
+        SoundManager.combo(combo);
+      } else {
+        SoundManager.eatFood();
+      }
 
       // 점수 100마다 속도 증가
       const newScore = store.score + gained;
