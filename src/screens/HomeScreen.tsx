@@ -2,13 +2,19 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { COLORS } from '../constants/theme';
+import { initSound } from '../sound/SoundManager';
 
 export function HomeScreen({ onStart }: { onStart: () => void }) {
+  const handleStart = () => {
+    initSound(); // 사용자 인터랙션으로 AudioContext 활성화
+    onStart();
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.title}>CYBER</Text>
       <Text style={styles.title}>SNAKE</Text>
-      <TouchableOpacity onPress={onStart}>
+      <TouchableOpacity onPress={handleStart}>
         <Text style={styles.start}>[ START ]</Text>
       </TouchableOpacity>
     </View>
