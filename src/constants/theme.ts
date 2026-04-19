@@ -1,7 +1,9 @@
 // src/constants/theme.ts
-export const GRID_SIZE = 20;        // 그리드 칸 수 (20x20)
-export const CELL_SIZE = 18;        // 각 칸의 픽셀 크기
-export const TICK_MS = 150;         // 초기 이동 간격 (ms)
+export const GRID_SIZE = 20;
+export const CELL_SIZE = 18;
+export const CANVAS_SIZE = GRID_SIZE * CELL_SIZE;
+export const TICK_MS = 150;
+export const TICK_MS_MIN = 60;
 
 export const COLORS = {
   background: '#0a0a1a',
